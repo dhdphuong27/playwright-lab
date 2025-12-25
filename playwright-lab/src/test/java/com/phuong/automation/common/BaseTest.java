@@ -4,8 +4,11 @@ import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import com.phuong.automation.constants.AppConfig;
 import com.phuong.automation.managers.PageManager;
+import com.phuong.automation.utils.LogUtils;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
@@ -13,6 +16,14 @@ public class BaseTest {
     protected Browser browser;
     protected BrowserContext browserContext;
     protected Page page;
+    @BeforeClass
+    public void testBeforeClass() {
+        LogUtils.info("Before Class");
+    }
+    @AfterClass
+    public void testAfterClass() {
+        LogUtils.info("After Class");
+    }
     @BeforeMethod
     public void setUp() {
         //Not using Factory Pattern here and create browser directly
@@ -30,6 +41,25 @@ public class BaseTest {
     }
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
-        System.out.println("Test finished, should clean up and save result here");
+        try {
+            PageManager.closePage();
+        } catch (Exception e) {
+            System.out.println("closePage fail: " + e.getMessage());
+        }
+        try {
+            PageManager.closeBrowserContext();
+        } catch (Exception e) {
+            System.out.println("closeContext fail: " + e.getMessage());
+        }
+        try {
+            PageManager.closeBrowser();
+        } catch (Exception e) {
+            System.out.println("closeBrowser fail: " + e.getMessage());
+        }
+        try {
+            PageManager.closePlaywright();
+        } catch (Exception e) {
+            System.out.println("closePlaywright fail: " + e.getMessage());
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+//Hỗ trợ các thao tác liên quan đến hệ thống
 public class SystemHelper {
     public static String getCurrentDir() {
         String current = System.getProperty("user.dir") + File.separator;

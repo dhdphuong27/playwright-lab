@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
 
+//quản lý các file *.properties
 public class PropertiesHelper {
 
     private static Properties properties;
