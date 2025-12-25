@@ -2,7 +2,7 @@
 
 A repository created to learn and practice Playwright JAVA automation testing.
 
-Study note: [https://www.notion.so/Automation-Learning-Note-2d3850dda02580acbb09dfe7d16ef086?source=copy_link](https://www.notion.so/Automation-Study-Note-2d3850dda02580acbb09dfe7d16ef086?source=copy_link)
+Study note: https://www.notion.so/Automation-Study-Note-2d3850dda02580acbb09dfe7d16ef086?source=copy_link
 
 #### 11:22PM 24/12/2025: Setting up Playwright with Java
 - Install JDK
