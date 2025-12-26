@@ -15,8 +15,9 @@ Study note: https://www.notion.so/Automation-Study-Note-2d3850dda02580acbb09dfe7
 #### 11:13PM 25/12/2025:
 - Build WebKeyword class for fill, click, textContent
 - Use @BeforeClass and @AfterClass
-- Selectors
-
+- Learn selectors
+#### 11:46PM 26/12/2025
+- Practice selectors on user dashboard
 
 
 
