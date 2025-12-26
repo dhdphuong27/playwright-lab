@@ -2,7 +2,7 @@
 
 A repository created to learn and practice Playwright JAVA automation testing.
 
-Study note: https://www.notion.so/Automation-Learning-Note-2d3850dda02580acbb09dfe7d16ef086?source=copy_link
+Study note: https://www.notion.so/Automation-Study-Note-2d3850dda02580acbb09dfe7d16ef086?source=copy_link
 
 #### 11:22PM 24/12/2025: Setting up Playwright with Java
 - Install JDK
@@ -13,7 +13,7 @@ Study note: https://www.notion.so/Automation-Learning-Note-2d3850dda02580acbb09d
 - Use @BeforeClass, @BeforeMethod, @Test, @AfterMethod, @AfterClass correctly. (Only used @BeforeMethod, @Test and @AfterMethod)
 - Set up and tear down tests properly
 #### 11:13PM 25/12/2025:
-- Learn about keyword-driven framework and apply it to the project
+- Build WebKeyword class for fill, click, textContent
 - Use @BeforeClass and @AfterClass
 - Selectors
 
