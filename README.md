@@ -13,7 +13,7 @@ Study note: https://www.notion.so/Automation-Study-Note-2d3850dda02580acbb09dfe7
 - Use @BeforeClass, @BeforeMethod, @Test, @AfterMethod, @AfterClass correctly. (Only used @BeforeMethod, @Test and @AfterMethod)
 - Set up and tear down tests properly
 #### 11:13PM 25/12/2025:
-- Learn about WebKeyword
+- Build WebKeyword class for fill, click, textContent
 - Use @BeforeClass and @AfterClass
 - Selectors
 
