@@ -3,7 +3,9 @@ package com.phuong.automation.common;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import com.phuong.automation.constants.AppConfig;
+import com.phuong.automation.keywords.WebKeyword;
 import com.phuong.automation.managers.PageManager;
+import com.phuong.automation.pom.pages.BasePage;
 import com.phuong.automation.utils.LogUtils;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -11,7 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-public class BaseTest {
+public class BaseTest extends BasePage {
     protected Playwright playwright;
     protected Browser browser;
     protected BrowserContext browserContext;
@@ -41,6 +43,7 @@ public class BaseTest {
     }
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
+        WebKeyword.closeSoftAssert();
         try {
             PageManager.closePage();
         } catch (Exception e) {

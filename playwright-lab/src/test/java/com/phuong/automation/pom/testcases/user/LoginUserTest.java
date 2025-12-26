@@ -14,10 +14,10 @@ public class LoginUserTest extends BaseTest {
                 .verifyLoginSuccess();
     }
 
-    /*@Test
+    @Test
     public void testLoginFailWithEmailInvalid() {
         page = new LoginUserPage();
         page.loginUser("customer123@example.com", "123456")
-                .verifyLoginFail("Invalid login credentials 123");
-    }*/
+                .verifyLoginFail("Invalid login credentials");
+    }
 }

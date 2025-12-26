@@ -11,8 +11,9 @@ public class LoginUserPage extends BasePage {
     private String passwordInput = "//*[@id=\"password\"]";
     private String loginButton = "//button[normalize-space()='Login']";
     private String headerDashboardPageUser = "//h1[normalize-space()='Dashboard']";
+    private String alertMessage = "[data-notify='message']"; //
+
     public LoginUserPage loginUser(String username, String password) {
-        //Should use WebKeyword here, but for learning purpose, use pure playwright first
 
         /*PageManager.getPage().navigate(url);
         PageManager.getPage().waitForLoadState();
@@ -27,8 +28,14 @@ public class LoginUserPage extends BasePage {
         return this;
     }
     public LoginUserPage verifyLoginSuccess(){
-        PageManager.getPage().waitForLoadState();
-        Assert.assertTrue(PageManager.getPage().isVisible(headerDashboardPageUser), "FAIL. The button Clear Cache not visible.");
+        WebKeyword.waitForPageLoaded();
+        Assert.assertTrue(WebKeyword.isVisible(headerDashboardPageUser), "FAIL. The button Clear Cache not visible.");
+        return this;
+    }
+    public LoginUserPage verifyLoginFail(String message){
+        WebKeyword.waitForPageLoaded();
+        Assert.assertEquals(WebKeyword.textContent(alertMessage), message, "FAIL. The error message not match.");
+        Assert.assertFalse(WebKeyword.isVisible(headerDashboardPageUser), "FAIL. The button Clear Cache visible.");
         return this;
     }
 
