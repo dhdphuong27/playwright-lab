@@ -8,7 +8,7 @@ import org.testng.asserts.SoftAssert;
 import java.nio.file.Paths;
 
 public class WebKeyword {
-    public static final int STEP_TIME = 2;
+    public static final int STEP_TIME = 1;
     private static SoftAssert softAssert;
     public static SoftAssert getSoftAssert() {
         if (softAssert == null) {
@@ -40,6 +40,11 @@ public class WebKeyword {
         sleep(STEP_TIME);
         PageManager.getPage().locator(locator).fill(value);
         LogUtils.info("Fill text " + value + " on element " + locator);
+    }
+    public static void fillId(String id, String value) {
+        sleep(STEP_TIME);
+        PageManager.getPage().getByTestId(id).fill(value);
+        LogUtils.info("Fill text " + value + " on element " + id);
     }
     public static void click(String locator) {
         sleep(STEP_TIME);

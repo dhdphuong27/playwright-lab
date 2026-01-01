@@ -1,5 +1,6 @@
 package com.phuong.automation.pom.pages;
 import com.phuong.automation.pom.pages.admin.LoginPage;
+import com.phuong.automation.pom.pages.mockweb.ClaudeMockPage;
 import com.phuong.automation.pom.pages.user.DashboardPage;
 import com.phuong.automation.pom.pages.user.LoginUserPage;
 
@@ -7,6 +8,13 @@ public class BasePage {
     private LoginPage loginPage;
     private LoginUserPage loginUserPage;
     private DashboardPage dashboardPage;
+    private ClaudeMockPage claudeMockPage;
+    public ClaudeMockPage getClaudeMockPage(){
+        if (claudeMockPage ==null){
+            claudeMockPage = new ClaudeMockPage();
+        }
+        return claudeMockPage;
+    }
     public LoginPage getLoginPage() {
         if (loginPage == null) {
             loginPage = new LoginPage();

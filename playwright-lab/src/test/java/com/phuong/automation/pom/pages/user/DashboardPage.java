@@ -18,10 +18,10 @@ public class DashboardPage extends BasePage {
     private String inputSubject = "input[placeholder='Subject']";
     private String inputDescription = "textarea[placeholder='Type your reply']";
     //private String inputAttachment = "input[name='attachments']";
-    private String buttonBrowse = "button:has-text('Browse')";
+    private String buttonBrowse = "div:text-is('Browse')";
     private String linkUploadNew = "a:has-text('Upload New')";
     private String linkSelectFile = "a:has-text('Select File')";
-    private String buttonUploadNew = ".uppy-Dashboard-dropFilesTitle >> input[type='file']";
+    private String buttonUploadNew = "input[type='file']";
     private String buttonAddFile = "button:has-text('Add File')";
     private String divFirstImage = ".aiz-uploader-select >> nth=0";
     private String buttonSendTicket = "button:has-text('Send Ticket')";
@@ -66,7 +66,7 @@ public class DashboardPage extends BasePage {
         WebKeyword.fill(inputSubject,subject);
         WebKeyword.fill(inputDescription, description);
 
-        /*WebKeyword.click(buttonBrowse);
+        WebKeyword.click(buttonBrowse);
         WebKeyword.click(linkUploadNew);
         String projectPath = System.getProperty("user.dir");
         String fullPath = projectPath + "/src/test/resources/test-data/" + fileName;
@@ -74,7 +74,7 @@ public class DashboardPage extends BasePage {
         WebKeyword.sleep(1);
         WebKeyword.click(linkSelectFile);
         WebKeyword.click(divFirstImage);
-        WebKeyword.click(buttonAddFile);*/
+        WebKeyword.click(buttonAddFile);
 
         WebKeyword.click(buttonSendTicket);
         return this;

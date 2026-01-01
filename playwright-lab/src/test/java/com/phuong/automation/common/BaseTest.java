@@ -13,6 +13,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import java.util.List;
+
 public class BaseTest extends BasePage {
     protected Playwright playwright;
     protected Browser browser;
@@ -31,9 +33,14 @@ public class BaseTest extends BasePage {
         //Not using Factory Pattern here and create browser directly
         playwright = Playwright.create(); //Create
         PageManager.setPlaywright(playwright);
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)); //Launch
+
+        browser = playwright.chromium()
+                    .launch(new BrowserType.LaunchOptions()
+                                            .setHeadless(false)
+                                            .setChannel("chrome")
+                                            .setArgs(List.of("--start-maximized"))); //Launch
         PageManager.setBrowser(browser);
-        browserContext = PageManager.getBrowser().newContext();
+        browserContext = PageManager.getBrowser().newContext(new Browser.NewContextOptions().setViewportSize(null));
         PageManager.setBrowserContext(browserContext);
         page = PageManager.getBrowserContext().newPage();
         //page.waitForLoadState(LoadState.LOAD, new Page.WaitForLoadStateOptions().setTimeout(AppConfig.TIMEOUT_PAGE_LOAD));
