@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Regression Test">
+    <listeners>
+        <listener class-name="com.phuong.automation.listeners.TestListener"/>
+    </listeners>
+    <test name="All Test" parallel="methods">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.phuong.automation.pom.testcases.mockweb.ClaudeMockPageTest"/>
+        </classes>
+    </test>
+</suite>

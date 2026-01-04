@@ -2,74 +2,67 @@ package com.phuong.automation.common;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
-import com.phuong.automation.constants.AppConfig;
 import com.phuong.automation.keywords.WebKeyword;
 import com.phuong.automation.managers.PageManager;
 import com.phuong.automation.pom.pages.BasePage;
-import com.phuong.automation.utils.LogUtils;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import java.util.List;
 
 public class BaseTest extends BasePage {
-    protected Playwright playwright;
-    protected Browser browser;
-    protected BrowserContext browserContext;
-    protected Page page;
-    @BeforeClass
-    public void testBeforeClass() {
-        LogUtils.info("Before Class");
-    }
-    @AfterClass
-    public void testAfterClass() {
-        LogUtils.info("After Class");
-    }
+
+    // Không cần khai báo biến class level ở đây nếu đã dùng PageManager hoàn toàn
+    // Nhưng giữ lại để tiện gọi nếu cần debug cục bộ
+
     @BeforeMethod
-    public void setUp() {
-        //Not using Factory Pattern here and create browser directly
-        playwright = Playwright.create(); //Create
+    @Parameters({"browser"})
+    public void createDriver(@Optional("chrome") String browserName) {
+        // 1. Khởi tạo Playwright
+        Playwright playwright = Playwright.create();
         PageManager.setPlaywright(playwright);
 
-        browser = playwright.chromium()
-                    .launch(new BrowserType.LaunchOptions()
-                                            .setHeadless(false)
-                                            .setChannel("chrome")
-                                            .setArgs(List.of("--start-maximized"))); //Launch
+        // 2. Khởi tạo Browser (Tùy chọn browser dựa trên tham số XML nếu cần)
+        Browser browser = playwright.chromium()
+                .launch(new BrowserType.LaunchOptions()
+                        .setHeadless(false)
+                        .setChannel("chrome") // Hoặc dùng tham số browserName để switch case
+                        .setArgs(List.of("--start-maximized")));
         PageManager.setBrowser(browser);
-        browserContext = PageManager.getBrowser().newContext(new Browser.NewContextOptions().setViewportSize(null));
+
+        // 3. Khởi tạo Context
+        BrowserContext browserContext = PageManager.getBrowser()
+                .newContext(new Browser.NewContextOptions().setViewportSize(null));
         PageManager.setBrowserContext(browserContext);
-        page = PageManager.getBrowserContext().newPage();
-        //page.waitForLoadState(LoadState.LOAD, new Page.WaitForLoadStateOptions().setTimeout(AppConfig.TIMEOUT_PAGE_LOAD));
-        page.waitForLoadState(LoadState.LOAD, new Page.WaitForLoadStateOptions().setTimeout(30));
+
+        // 4. Khởi tạo Page
+        Page page = PageManager.getBrowserContext().newPage();
         PageManager.setPage(page);
 
+        // 5. Cấu hình Page
+        page.waitForLoadState(LoadState.LOAD, new Page.WaitForLoadStateOptions().setTimeout(30000)); // 30s thay vì 30ms
     }
+
     @AfterMethod(alwaysRun = true)
-    public void tearDown(ITestResult result) {
+    public void closeDriver(ITestResult result) {
+        // Xử lý SoftAssert nếu có
         WebKeyword.closeSoftAssert();
+
+        // Đóng theo thứ tự ngược lại: Page -> Context -> Browser -> Playwright
+        // Hàm closeAll() trong PageManager của bạn đã bao gồm logic này,
+        // nhưng ta nên gọi từng cái để đảm bảo clear ThreadLocal sạch sẽ.
+
         try {
-            PageManager.closePage();
+            // Có thể thêm logic chụp ảnh màn hình khi fail ở đây
+            // if (result.getStatus() == ITestResult.FAILURE) { ... }
         } catch (Exception e) {
-            System.out.println("closePage fail: " + e.getMessage());
-        }
-        try {
-            PageManager.closeBrowserContext();
-        } catch (Exception e) {
-            System.out.println("closeContext fail: " + e.getMessage());
-        }
-        try {
-            PageManager.closeBrowser();
-        } catch (Exception e) {
-            System.out.println("closeBrowser fail: " + e.getMessage());
-        }
-        try {
-            PageManager.closePlaywright();
-        } catch (Exception e) {
-            System.out.println("closePlaywright fail: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // Quan trọng: Phải đóng tất cả để giải phóng Thread
+            PageManager.closeAll();
         }
     }
 }
